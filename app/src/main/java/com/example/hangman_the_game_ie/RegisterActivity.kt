@@ -25,10 +25,10 @@ class RegisterActivity : AppCompatActivity() {
 
         val sign_up_button = findViewById<Button>(R.id.button_registration)
         sign_up_button.setOnClickListener {
-            val usernameEditText = findViewById<EditText>(R.id.editText_email)
+            val usernameEditText = findViewById<EditText>(R.id.editText_username_signup)
             val passwordEditText = findViewById<EditText>(R.id.editText_password_signup)
             val passwordConfirmationEditText = findViewById<EditText>(R.id.editText_passwordconfirmation_signup)
-            val emailEditText = findViewById<EditText>(R.id.editText_username_signup)
+            val emailEditText = findViewById<EditText>(R.id.editText_email)
 
                 //usuwanie białych znaków metodą .trim()
             val username = usernameEditText.text.toString().trim()

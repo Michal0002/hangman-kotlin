@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             if (loggedIn) {
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, Hangman_main::class.java)
+                intent.putExtra("username", username)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()

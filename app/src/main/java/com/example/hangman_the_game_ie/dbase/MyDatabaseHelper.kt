@@ -47,7 +47,7 @@ class MyDatabaseHelper(private val context: Context) :
         values.put(COL_USERNAME, username)
         values.put(COL_PASSWORD, password)
         values.put(COL_EMAIL, email)
-
+        values.put(COL_COINS, 100)
         val result = db.insert(TABLE_NAME, null, values)
         if (result == -1L) {
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
@@ -83,7 +83,24 @@ class MyDatabaseHelper(private val context: Context) :
         cursor.close()
         return exists
     }
+    @SuppressLint("Range")
+    fun getCoinsForUser(username: String): Int {
+        val db = readableDatabase
+        var coins = 0
 
+        val query = "SELECT coins FROM users WHERE username = ?"
+        val selectionArgs = arrayOf(username)
+
+        val cursor = db.rawQuery(query, selectionArgs)
+
+        if (cursor.moveToFirst()) {
+            coins = cursor.getInt(cursor.getColumnIndex("coins"))
+        }
+        cursor.close()
+        db.close()
+
+        return coins
+    }
 }
 
 
@@ -108,18 +125,3 @@ class MyDatabaseHelper(private val context: Context) :
 //}
 
 
-//@SuppressLint("Range")
-//fun getUser(username: String): String? {
-//    val db = this.readableDatabase
-//    val query = "SELECT ${MyDatabaseHelper.COL_USERNAME}, ${MyDatabaseHelper.COL_PASSWORD} FROM ${MyDatabaseHelper.TABLE_NAME} WHERE ${MyDatabaseHelper.COL_USERNAME} = ?"
-//    val cursor: Cursor? = db.rawQuery(query, arrayOf(username))
-//    var password: String? = null
-//
-//    if (cursor?.moveToFirst() == true) {
-//        password = cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.COL_PASSWORD))
-//    }
-//
-//    cursor?.close()
-//    db.close()
-//    return password
-//}
