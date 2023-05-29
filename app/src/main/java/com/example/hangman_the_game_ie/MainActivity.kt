@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, Hangman_main::class.java)
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "Invalid credentials with $username and pwd $password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -43,11 +43,11 @@ class MainActivity : AppCompatActivity() {
         }
         val button_google = findViewById<ImageButton>(R.id.button_loginGoogle)
         button_google.setOnClickListener{
-            Toast.makeText(this, "Google account.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Google account", Toast.LENGTH_SHORT).show()
         }
         val button_facebook = findViewById<ImageButton>(R.id.button_loginFacebook)
         button_facebook.setOnClickListener{
-            Toast.makeText(this, "Facebook account.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Facebook account", Toast.LENGTH_SHORT).show()
         }
 //        val textViewUsers = findViewById<TextView>(R.id.textView_abc)
 //        val dbHelper = MyDatabaseHelper(this)

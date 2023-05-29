@@ -29,6 +29,7 @@ class RegisterActivity : AppCompatActivity() {
             val passwordEditText = findViewById<EditText>(R.id.editText_password_signup)
             val passwordConfirmationEditText = findViewById<EditText>(R.id.editText_passwordconfirmation_signup)
             val emailEditText = findViewById<EditText>(R.id.editText_username_signup)
+
                 //usuwanie białych znaków metodą .trim()
             val username = usernameEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()

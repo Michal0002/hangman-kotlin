@@ -27,29 +27,7 @@ class MyDatabaseHelper(private val context: Context) :
                 "$COL_EMAIL TEXT, $COL_PASSWORD TEXT, $COL_USERNAME TEXT, $COL_COINS INTEGER)"
         if (db != null) {
             db.execSQL(createTableQuery)
-            insertInitialUsers(db)
-
         }
-    }
-    private fun insertInitialUsers(db: SQLiteDatabase) {
-        val values = ContentValues()
-
-        // Dodawanie pierwszego użytkownika
-        values.put(COL_EMAIL, "example1@example.com")
-        values.put(COL_PASSWORD, "password1")
-        values.put(COL_USERNAME, "User1")
-        values.put(COL_COINS, 100)
-        db.insert(TABLE_NAME, null, values)
-
-        // Dodawanie drugiego użytkownika
-        values.clear()
-        values.put(COL_EMAIL, "example2@example.com")
-        values.put(COL_PASSWORD, "password2")
-        values.put(COL_USERNAME, "User2")
-        values.put(COL_COINS, 50)
-        db.insert(TABLE_NAME, null, values)
-
-        Toast.makeText(context, "Database created and initial users inserted", Toast.LENGTH_SHORT).show()
     }
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         TODO("Not yet implemented")
@@ -57,7 +35,6 @@ class MyDatabaseHelper(private val context: Context) :
     fun addUser(username: String, password: String, email: String): Boolean {
         val db = this.writableDatabase
 
-        // Check if username or email already exist in the database
         val usernameExists = checkIfUsernameExists(db, username)
         val emailExists = checkIfEmailExists(db, email)
 

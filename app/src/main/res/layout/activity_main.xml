@@ -119,6 +119,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="179dp"
+        android:fontFamily="@font/droid_sans_mono"
         android:includeFontPadding="true"
         android:text="Use other Methods"
         android:textColor="#FFFFFF"
