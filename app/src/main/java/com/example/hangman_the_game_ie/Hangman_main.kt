@@ -24,7 +24,22 @@ class Hangman_main : AppCompatActivity() {
         button_play.setOnClickListener{
             val intent = Intent(this, GameCategoryActivity::class.java)
             intent.putExtra("username", username)
+            intent.putExtra("coins", coins)
             startActivity(intent)
         }
+        val button_addnew = findViewById<Button>(R.id.button_newWord)
+        button_addnew.setOnClickListener{
+            val intent = Intent(this, AdNewWordActivity::class.java)
+            intent.putExtra("username", username)
+            intent.putExtra("coins", coins)
+            startActivity(intent)
+        }
+
+        val textView5 = findViewById<TextView>(R.id.textView5)
+        val words = dbHelper.getWords()
+        val wordsText = words.joinToString(", ") // Łączysz słowa w jedną linię tekstu oddzieloną przecinkami
+
+        textView5.text = wordsText
+
     }
 }

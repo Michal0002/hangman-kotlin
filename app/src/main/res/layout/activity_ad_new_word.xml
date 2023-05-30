@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdNewWordActivity">
+
+    <Spinner
+        android:id="@+id/spinner_difficultyNewWord"
+        android:layout_width="276dp"
+        android:layout_height="158dp"
+        android:layout_marginBottom="81dp"
+        android:background="#FFFFFF"
+        android:hapticFeedbackEnabled="false"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/button_addNewWord"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText_wordName" />
+
+    <Button
+        android:id="@+id/button_addNewWord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="219dp"
+        android:text="Add new"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_difficultyNewWord" />
+
+    <EditText
+        android:id="@+id/editTextText_wordName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="253dp"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="Word name"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_difficultyNewWord"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

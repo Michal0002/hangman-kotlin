@@ -50,10 +50,5 @@ class MainActivity : AppCompatActivity() {
         button_facebook.setOnClickListener{
             Toast.makeText(this, "Facebook account", Toast.LENGTH_SHORT).show()
         }
-//        val textViewUsers = findViewById<TextView>(R.id.textView_abc)
-//        val dbHelper = MyDatabaseHelper(this)
-//        val users = dbHelper.getPasswords()
-//        val usersText = users.joinToString("\n") // Łączy nazwy użytkowników w jedną długą linię tekstu
-//        textViewUsers.text = usersText
     }
 }
