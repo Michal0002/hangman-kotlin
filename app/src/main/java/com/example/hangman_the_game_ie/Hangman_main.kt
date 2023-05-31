@@ -34,12 +34,10 @@ class Hangman_main : AppCompatActivity() {
             intent.putExtra("coins", coins)
             startActivity(intent)
         }
-
-        val textView5 = findViewById<TextView>(R.id.textView5)
-        val words = dbHelper.getWords()
-        val wordsText = words.joinToString(", ") // Łączysz słowa w jedną linię tekstu oddzieloną przecinkami
-
-        textView5.text = wordsText
-
+//        val textView5 = findViewById<TextView>(R.id.textView5)
+//        val words = dbHelper.getWords()
+//        val wordsText = words.joinToString(", ")
+//
+//        textView5.text = wordsText
     }
 }

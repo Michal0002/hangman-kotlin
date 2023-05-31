@@ -163,7 +163,7 @@ class MyDatabaseHelper(private val context: Context) :
     fun getWords(): ArrayList<String> {
         val words = ArrayList<String>()
         val db = this.readableDatabase
-        val query = "SELECT ${MyDatabaseHelper.COL_WORD_NAME} FROM ${MyDatabaseHelper.TABLE_WORDS} WHERE $COL_WORD_DIFFICULT ='easy'"
+        val query = "SELECT ${MyDatabaseHelper.COL_WORD_NAME} FROM ${MyDatabaseHelper.TABLE_WORDS}"
         val cursor: Cursor? = db.rawQuery(query, null)
     
         cursor?.let {
@@ -177,5 +177,14 @@ class MyDatabaseHelper(private val context: Context) :
         db.close()
         return words
     }
+
+    fun updateUserCoins(username: String, coins: Int) {
+        val db = writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COL_COINS, coins)
+        db.update(TABLE_USERS, contentValues, "$COL_USERNAME = ?", arrayOf(username))
+        db.close()
+    }
+
 }
 
