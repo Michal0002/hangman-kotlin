@@ -20,18 +20,23 @@ class Hangman_main : AppCompatActivity() {
         val coins = dbHelper.getCoinsForUser(username)
         val coinsy = findViewById<TextView>(R.id.textView3)
         coinsy.text = coins.toString()
-        val button_play = findViewById<Button>(R.id.button_play)
-        button_play.setOnClickListener{
+        val buttonPlay = findViewById<Button>(R.id.button_play)
+        buttonPlay.setOnClickListener{
             val intent = Intent(this, GameCategoryActivity::class.java)
             intent.putExtra("username", username)
             intent.putExtra("coins", coins)
             startActivity(intent)
         }
-        val button_addnew = findViewById<Button>(R.id.button_newWord)
-        button_addnew.setOnClickListener{
+        val buttonAddnew = findViewById<Button>(R.id.button_newWord)
+        buttonAddnew.setOnClickListener{
             val intent = Intent(this, AdNewWordActivity::class.java)
             intent.putExtra("username", username)
             intent.putExtra("coins", coins)
+            startActivity(intent)
+        }
+        val buttonWords = findViewById<Button>(R.id.button_allWords)
+        buttonWords.setOnClickListener{
+            var intent = Intent(this, AllWordsActivity::class.java )
             startActivity(intent)
         }
 //        val textView5 = findViewById<TextView>(R.id.textView5)

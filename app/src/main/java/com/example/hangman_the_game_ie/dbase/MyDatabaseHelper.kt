@@ -6,6 +6,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.database.sqlite.SQLiteQueryBuilder
 import android.widget.Toast
 import com.example.hangman_the_game_ie.WordListEasy
 import com.example.hangman_the_game_ie.WordListHard
@@ -163,21 +164,32 @@ class MyDatabaseHelper(private val context: Context) :
     fun getWords(): ArrayList<String> {
         val words = ArrayList<String>()
         val db = this.readableDatabase
-        val query = "SELECT ${MyDatabaseHelper.COL_WORD_NAME} FROM ${MyDatabaseHelper.TABLE_WORDS}"
+        val query = "SELECT $COL_WORD_NAME, $COL_WORD_DIFFICULT FROM $TABLE_WORDS"
         val cursor: Cursor? = db.rawQuery(query, null)
     
         cursor?.let {
             val columnIndex = cursor.getColumnIndex(MyDatabaseHelper.COL_WORD_NAME)
             while (cursor.moveToNext()) {
-                val password = cursor.getString(columnIndex)
-                words.add(password)
+                val name = cursor.getString(columnIndex)
+                words.add(name)
             }
         }
         cursor?.close()
         db.close()
         return words
     }
-
+    fun queryWithBuilder(projectionInColumns : Array<String>?, filterColumns: String?, filterValues : Array<String>?, order :String? ) : Cursor{
+        var builder = SQLiteQueryBuilder()
+        builder.tables = TABLE_WORDS
+        val database = this.readableDatabase
+        return builder.query (database,
+            projectionInColumns,
+            filterColumns,
+            filterValues,
+            null,
+            null,
+            order)
+    }
     fun updateUserCoins(username: String, coins: Int) {
         val db = writableDatabase
         val contentValues = ContentValues()
@@ -185,6 +197,8 @@ class MyDatabaseHelper(private val context: Context) :
         db.update(TABLE_USERS, contentValues, "$COL_USERNAME = ?", arrayOf(username))
         db.close()
     }
+
+
 
 }
 
