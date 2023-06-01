@@ -47,7 +47,8 @@ class GameActivity : AppCompatActivity() {
             if (guessedLetter != null && guessedLetter in 'A'..'Z') {
                 var correctGuess = false
                 if (guessedLetter in lettersUsed) {
-                    Toast.makeText(this, "Ta litera została już użyta.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "This letter has already been used.", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     lettersUsed.add(guessedLetter)
                     textViewLettersUsed.text = lettersUsed.joinToString(" ")
@@ -63,48 +64,87 @@ class GameActivity : AppCompatActivity() {
                     if (correctGuess) {
                         Toast.makeText(
                             this,
-                            "Brawo! Litera $guessedLetter znajduje się w słowie",
+                            "Good job! The letter $guessedLetter is in the word.",
                             Toast.LENGTH_SHORT
                         ).show()
                         if (!hiddenWord.contains('_')) {
                             dbHelper.updateUserCoins(username, coins + 50)
-                            var intent = Intent(this, Hangman_main::class.java )
+                            var intent = Intent(this, Hangman_main::class.java)
                             intent.putExtra("username", username)
                             intent.putExtra("coins", coins)
                             startActivity(intent)
-                            Toast.makeText(this, "Wygrałeś! Dostajesz 50 monet", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                "You won! You received 50 coins.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     } else {
                         currentAttempt++
                         if (currentAttempt <= 11) {
                             val attemptsLeft = findViewById<TextView>(R.id.textView_attemptsLeft)
                             val attempts = (11 - currentAttempt)
-                            attemptsLeft.text = ("Pozostała liczba prób: $attempts").toString() // Aktualizacja pozostałych prób
+                            attemptsLeft.text =
+                                ("Attempts left: $attempts").toString() // Aktualizacja pozostałych prób
                             val resourceName = "hangman$currentAttempt"
                             val resourceId =
                                 resources.getIdentifier(resourceName, "drawable", packageName)
                             imageViewAttempts.setImageResource(resourceId)
-                            Toast.makeText(this, "Nieprawidłowa litera.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Incorrect letter.", Toast.LENGTH_SHORT).show()
                         } else {
                             // Użytkownik przekroczył limit prób
                             // Dodaj odpowiednią logikę tutaj
-                            Toast.makeText(this, "Przegrałeś.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "You lost.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             } else {
-                Toast.makeText(this, "Wprowadź pojedynczą literę od A do Z.", Toast.LENGTH_SHORT)
+                Toast.makeText(this, "Enter a single letter from A to Z.", Toast.LENGTH_SHORT)
                     .show()
             }
             editTextLetter.text.clear()
         }
         val buttonHint = findViewById<Button>(R.id.button_hint)
-        buttonHint.setOnClickListener {
-            val hintLetter = getRandomHintLetter()
-            val editTextLetter = findViewById<EditText>(R.id.editTextText_letter)
-            editTextLetter.setText(hintLetter.toString())
-        }
+        var hintCount = 0
 
+        buttonHint.setOnClickListener {
+            if (hintCount < 3) {
+                val coins = dbHelper.getCoinsForUser(username)
+                if (coins >= 50) {
+                    dbHelper.hintUserCoins(username, coins - 50)
+
+                    val hintLetter = getRandomHintLetter()
+
+                    val revealedIndices = mutableListOf<Int>()
+                    for (i in randomWord.indices) {
+                        if (randomWord[i].toUpperCase() == hintLetter && hiddenWord[i * 2] == '_') {
+                            revealedIndices.add(i)
+                        }
+                    }
+
+                        if (revealedIndices.isNotEmpty()) {
+                            val revealedWord = StringBuilder(hiddenWord)
+                            for (index in revealedIndices) {
+                                revealedWord.setCharAt(index * 2, hintLetter)
+                            }
+                            hiddenWord = revealedWord.toString()
+                            word.text = hiddenWord
+                        } else {
+                            Toast.makeText(this, "No more letters to reveal.", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    editTextLetter.setText(hintLetter.toString())
+                    hintCount++
+                    val updatedCoins = coins - 50
+                    val coinsValue = findViewById<TextView>(R.id.textView10)
+                    coinsValue.text = updatedCoins.toString()
+                } else {
+                    Toast.makeText(this, "No enough coins.", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "You have reached the hint limit.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     // Losujemy słówko z BD i zakrywamy je znakiem"_"
@@ -116,13 +156,13 @@ class GameActivity : AppCompatActivity() {
         if (randomWord.isNotEmpty()) {
             word.text = hiddenWord.uppercase()
         } else {
-            word.text = "Brak dostępnych słów w BD"
+            word.text = "No available words in the database."
         }
     }
 
     // Ukrywamy słowo znakiem - "_"
     private fun hideWord(word: String): String {
-        val hidden = StringBuilder()  // obiekt StringBuilder, dla ukrycia słowa
+        val hidden = StringBuilder()  // obiekt StringBuilder dla ukrycia słowa
         for (i in word.indices) {  // iteracja po indeksach w słowie
             hidden.append("_ ")  // ukrywanie słowa
         }
@@ -130,7 +170,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun getRandomHintLetter(): Char {
-        val availableLetters = ('A'..'Z').filter { it !in lettersUsed }
-        return availableLetters.random()
+        val availableLetters = ('A'..'Z').filter { it !in lettersUsed && it in randomWord.toUpperCase() && it !in hiddenWord.toUpperCase() }
+        return availableLetters.randomOrNull() ?: throw IllegalStateException("No more letters to reveal.")
     }
 }

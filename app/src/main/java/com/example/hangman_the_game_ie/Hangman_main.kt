@@ -37,7 +37,13 @@ class Hangman_main : AppCompatActivity() {
         val buttonWords = findViewById<Button>(R.id.button_allWords)
         buttonWords.setOnClickListener{
             var intent = Intent(this, AllWordsActivity::class.java )
+            intent.putExtra("username", username)
+            intent.putExtra("coins", coins)
             startActivity(intent)
+        }
+        val buttonExit = findViewById<Button>(R.id.button_exitgame)
+        buttonExit.setOnClickListener{
+            finish()
         }
 //        val textView5 = findViewById<TextView>(R.id.textView5)
 //        val words = dbHelper.getWords()

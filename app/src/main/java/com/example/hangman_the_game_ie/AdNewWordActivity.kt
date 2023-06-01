@@ -14,15 +14,14 @@ class AdNewWordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ad_new_word)
+        val username = intent.getStringExtra("username").toString()
+        val coins = intent.getStringExtra("coins").toString()
 
         val spinner: Spinner = findViewById(R.id.spinner_difficultyNewWord)
-// Tworzenie listy elementów
         val items = listOf("hard", "medium", "easy")
-// Tworzenie ArrayAdaptera
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
-// Określanie stylu dla rozwijanej listy
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-// Przypisywanie adaptera do Spinnera
         spinner.adapter = adapter
 
         val newWordName = findViewById<EditText>(R.id.editTextText_wordName)
@@ -30,22 +29,29 @@ class AdNewWordActivity : AppCompatActivity() {
         val buttonAddNewWord = findViewById<Button>(R.id.button_addNewWord)
 
         buttonAddNewWord.setOnClickListener{
-            val word = newWordName?.text.toString()
+            val word = newWordName.text.toString()
             val difficult = selectedDifficult?.selectedItem?.toString()
 
-            if (word != null && difficult != null) {
+            if (word.isNotEmpty() && difficult != null ) {
                 val dbHelper = MyDatabaseHelper(this)
                 val newWord = dbHelper.addWord(word, difficult)
 
                 if (newWord) {
-                    Toast.makeText(this, "Dodano nowe słówko do bazy: $word, $difficult", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Added new word to database: $word, $difficult", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this, "Coś poszło nie tak i nie dodano słowa", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Something went wrong.", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Wprowadź wartości dla nowego słowa i trudności.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Enter values for a new word and difficulty", Toast.LENGTH_SHORT).show()
             }
         }
+    val buttonBack = findViewById<Button>(R.id.button_goBack)
+        buttonBack.setOnClickListener{
+            val intent = Intent(this, Hangman_main::class.java)
+            intent.putExtra("username", username)
+            intent.putExtra("coins", coins)
+            startActivity(intent)
 
+        }
     }
 }

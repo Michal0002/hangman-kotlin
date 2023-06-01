@@ -108,7 +108,7 @@
         android:id="@+id/textView_attemptsLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pozostała liczba prób: 11"
+        android:text="Attempts left:: 11"
         app:layout_constraintBottom_toTopOf="@+id/imageView_attempts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

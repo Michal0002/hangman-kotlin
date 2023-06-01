@@ -14,13 +14,10 @@ class GameCategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_category)
         val spinner: Spinner = findViewById(R.id.spinner_difficulty)
-// Tworzenie listy elementów
         val items = listOf("hard", "medium", "easy")
-// Tworzenie ArrayAdaptera
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
-// Określanie stylu dla rozwijanej listy
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-// Przypisywanie adaptera do Spinnera
         spinner.adapter = adapter
 
         val username = intent.getStringExtra("username").toString()
@@ -29,6 +26,8 @@ class GameCategoryActivity : AppCompatActivity() {
         val coins = dbHelper.getCoinsForUser(username)
         val coinsy = findViewById<TextView>(R.id.textView16)
         coinsy.text = coins.toString()
+
+        //powrót do menu
         val button_back = findViewById<Button>(R.id.button_goback)
         button_back.setOnClickListener{
             var intent = Intent(this, Hangman_main::class.java )
@@ -36,6 +35,7 @@ class GameCategoryActivity : AppCompatActivity() {
             intent.putExtra("coins", coins)
             startActivity(intent)
         }
+        //zacznij gre
         val button_start = findViewById<Button>(R.id.button_start)
         button_start.setOnClickListener{
             val spinner_difficulty = findViewById<Spinner>(R.id.spinner_difficulty)

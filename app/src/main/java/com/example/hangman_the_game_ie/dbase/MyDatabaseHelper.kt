@@ -198,7 +198,13 @@ class MyDatabaseHelper(private val context: Context) :
         db.close()
     }
 
-
+    fun hintUserCoins(username: String, coins: Int) {
+        val db = writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COL_COINS, coins)
+        db.update(TABLE_USERS, contentValues, "$COL_USERNAME = ?", arrayOf(username))
+        db.close()
+    }
 
 }
 

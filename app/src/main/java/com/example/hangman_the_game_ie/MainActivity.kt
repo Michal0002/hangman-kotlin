@@ -14,8 +14,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var button_signIn = findViewById<Button>(R.id.button_signIn)
-        button_signIn.setOnClickListener{
+        var buttonSignIn = findViewById<Button>(R.id.button_signIn)
+        buttonSignIn.setOnClickListener{
             val username = findViewById<EditText>(R.id.editTextText_username1).text.toString()
             val password = findViewById<EditText>(R.id.editTextText_password).text.toString()
 
@@ -37,17 +37,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val sign_up = findViewById<Button>(R.id.button_registration)
-        sign_up.setOnClickListener{
+        val buttonSignUp = findViewById<Button>(R.id.button_registration)
+        buttonSignUp.setOnClickListener{
             var intent = Intent(this, RegisterActivity::class.java )
             startActivity(intent)
         }
-        val button_google = findViewById<ImageButton>(R.id.button_loginGoogle)
-        button_google.setOnClickListener{
+        val buttonGoogle = findViewById<ImageButton>(R.id.button_loginGoogle)
+        buttonGoogle.setOnClickListener{
             Toast.makeText(this, "Google account", Toast.LENGTH_SHORT).show()
         }
-        val button_facebook = findViewById<ImageButton>(R.id.button_loginFacebook)
-        button_facebook.setOnClickListener{
+        val buttonFacebook = findViewById<ImageButton>(R.id.button_loginFacebook)
+        buttonFacebook.setOnClickListener{
             Toast.makeText(this, "Facebook account", Toast.LENGTH_SHORT).show()
         }
     }
